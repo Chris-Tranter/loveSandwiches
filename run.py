@@ -10,15 +10,25 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
     ]
 
-# Pulling from the imported gspread were retrieving the service account and passing it our JSON
+# Pulling from the imported gspread we retrieve the service account
 
 CREDS = Credentials.from_service_account_file('creds.JSON')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('loveSandwiches')
 
-sales = SHEET.worksheet('sales')
+# Functionality
 
-data = sales.get_all_values()
+def get_sales_data():
+    """
+    Get sales figures input from the user.
+    """
+    print("Please enter sales data from the last market.")
+    print("Data should be six numbers, separated by commas.")
+    print("Example: 10,20,30,40,50,60\n")
 
-print(data)
+    data_str = input("Enter your data here: ")
+    print(f"The data provided is {data_str}")
+
+
+get_sales_data()
