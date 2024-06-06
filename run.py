@@ -59,14 +59,27 @@ def validate_data(values):
 
     return True
 
+# update sales worksheet from user input
+
 def update_sales_worksheet(data):
     """
-    Update sales worksheet, add new row with the list data provided
+    Update sales worksheet, in a new row
     """
     print("Updating sales worksheet...\n")
     sales_worksheet = SHEET.worksheet("sales")
     sales_worksheet.append_row(data)
     print("Sales worksheet updated successfully.\n")
+
+# update surplus worksheet from user input
+
+def update_surplus_worksheet(data):
+    """
+    Update surplus worksheet, in a new row
+    """
+    print("Updating surplus worksheet...\n")
+    surplus_worksheet = SHEET.worksheet("surplus")
+    surplus_worksheet.append_row(data)
+    print("Surplus worksheet updated successfully.\n")
 
 # surplus data calculator parsed with sales data list 
 
@@ -99,7 +112,7 @@ def main():
     sales_data = [int(num) for num in data]
     update_sales_worksheet(sales_data)
     new_surplus_data = calculate_surplus_data(sales_data)
-    print(new_surplus_data)
+    update_surplus_worksheet(new_surplus_data)
 # displays text for the main functions purpose
 
 print('Welcome to Data Automation for loveSandwiches')
