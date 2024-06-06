@@ -11,7 +11,7 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
     ]
 
-# Pulling from the imported gspread we retrieve the service account
+# Pulling from the imported gspread we retrieve the service account  using consant variables
 
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
@@ -81,7 +81,13 @@ def calculate_surplus_data(sales_row):
     stock = SHEET.worksheet("stock").get_all_values()
     #                 -1       pulls the last list from the stock sheet
     stock_row = stock[-1]
-    print(stock_row)
+    
+    surplus_data = []
+    for stock, sales in zip(stock_row, sales_row):
+        surplus = int(stock) - sales
+        surplus_data.append(surplus)
+
+    return surplus_data
 
 # wrap main function calls in MAIN FUNCTION
 
@@ -92,9 +98,9 @@ def main():
     data = get_sales_data()
     sales_data = [int(num) for num in data]
     update_sales_worksheet(sales_data)
-    calculate_surplus_data(sales_data)
-
-# displays text for the functions purpose
+    new_surplus_data = calculate_surplus_data(sales_data)
+    print(new_surplus_data)
+# displays text for the main functions purpose
 
 print('Welcome to Data Automation for loveSandwiches')
 main()
